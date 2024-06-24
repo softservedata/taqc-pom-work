@@ -1,0 +1,26 @@
+1. Introduction
+2. Variables, types, arithmetic
+3. Git and Gradle
+4. Conditionals, Enums, Nullability
+5. Arrays, Loops, Exceptions
+	проста реалізація Arrays. Консоль
+	Друк таблиці, цикли вкладені цикли, масив, індекси, сусіди одновимірний, показати двовимірний (два об'єкти, клонування - баги поверхневе) 
+6. Functions. Basic classes. Encapsulation
+	виділення методів
+	Тести
+7. Intro to Collections, Generics, Data classes, Destructuring
+	замінити масив лістом
+8. Maps, Iterable/Iterator, Comparable/Comparator, Polymorphism
+	Список сусідів, повернути як iterable, сіквенси (Lazy evaluetion, stream)
+9. Extension functions, Lambdas, Functional techniques
+	toText, конвертувати в dp або sp, додати  Extension, 
+10. Interfaces and abstract classes. Sealed classes.
+	виділяємо інтерфейс. UI консоль. про state, controler view, model
+11. Objects. Companion objects. More on Enums
+	UI дизайн, картинку як виглядає, скріни, з плануванням
+12. Operators, infix functions, scope functions
+	modyfi,  створити кнопки, дизайн, розміни, padding, layout
+13. Delegation. Lazy properties
+	додати обробники та стайт,
+14 Стайт хостінг, витягуємо стайт з view, тестуємо, callback.
+

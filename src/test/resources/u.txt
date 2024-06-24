@@ -1,0 +1,5 @@
+Getting Started with Java Properties _ Baeldung.html
+https://www.baeldung.com/java-properties
+ Properties appProps = new Properties();
+ appProps.load(new FileInputStream(appConfigPath));
+ String appVersion = appProps.getProperty("version");
