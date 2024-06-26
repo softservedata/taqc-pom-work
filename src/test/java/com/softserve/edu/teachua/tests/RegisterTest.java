@@ -9,7 +9,7 @@ import com.softserve.edu.opencart.data.UserRepository;
 import com.softserve.edu.opencart.pages.EditAccountPage;
 import com.softserve.edu.opencart.pages.HomePage;
 
-public class RegisterTest extends TestRunner {
+public class RegisterTest extends TestRunnerNg {
 
     @DataProvider
     public Object[][] dataRegister() {

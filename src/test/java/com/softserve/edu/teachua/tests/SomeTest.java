@@ -1,15 +1,14 @@
 package com.softserve.edu.teachua.tests;
 
-import com.softserve.edu.teachua.data.Challengies;
-import com.softserve.edu.teachua.data.Cities;
-import com.softserve.edu.teachua.data.ClubContents;
-import com.softserve.edu.teachua.data.CommentContents;
+import com.softserve.edu.teachua.data.*;
 import com.softserve.edu.teachua.pages.challenge.ChallengeTeachPage;
 import com.softserve.edu.teachua.pages.challenge.YoutubeFrame;
 import com.softserve.edu.teachua.pages.club.AdvancedClubPage;
 import com.softserve.edu.teachua.pages.club.ClubComponent;
 import com.softserve.edu.teachua.pages.club.ClubDetailsPage;
-import com.softserve.edu.teachua.pages.club.ClubPage;
+import com.softserve.edu.teachua.pages.club.ClubNotFoundPage;
+import com.softserve.edu.teachua.pages.menu.HomePage;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -53,18 +52,28 @@ public class SomeTest extends TestRunner {
 
     private static Stream<Arguments> challengeTeachProvider() {
         return Stream.of(
-                Arguments.of(Challengies.TO_LEARN_CHALLENGE)
+                Arguments.of(Challengies.TO_LEARN_CHALLENGE, UrlContents.WEBINAR_IFRAME)
         );
     }
 
     @ParameterizedTest(name = "{index} => challengeName={0}")
     @MethodSource("challengeTeachProvider")
-    public void checkChallenge(Challengies challengeName) {
+    public void checkChallenge(Challengies challengeName, UrlContents urlContents) {
         YoutubeFrame youtubeFrame = loadApplication()
                 .gotoChallengePage(challengeName, ChallengeTeachPage.class)
-                .gotoYoutubeFrame();
+                .gotoYoutubeFrame()
+                .playVideoContent();
+        presentationSleep(4);
+        System.out.println("\tyoutubeFrame.getYoutubeLinkText() = " + youtubeFrame.getYoutubeLinkText());
         //
         // TODO Check Youtube Frame
+        Assertions.assertTrue(youtubeFrame.getYoutubeLinkText().contains(urlContents.getSearchVideo()));
+        presentationSleep();
+        //
+        HomePage homePage = youtubeFrame
+                .gotoChallengeTeachPage()
+                .gotoHomePage();
+        presentationSleep(4);
     }
 
     private static Stream<Arguments> cityProvider() {
@@ -84,6 +93,8 @@ public class SomeTest extends TestRunner {
                 .getFirstClubComponent();
         //
         // TODO Check first club address
+        Assertions.assertTrue(ClubComponent.getAddressLabelText().contains(city.getCity()));
+        presentationSleep();
     }
 
 
@@ -104,6 +115,8 @@ public class SomeTest extends TestRunner {
                 .getClubComponentByPartialTitle(clubContents.getTitle());
         //
         // TODO Check club titles and descriptions
+        Assertions.assertTrue(ClubComponent.getTitleLinkText().contains(clubContents.getTitle()));
+        presentationSleep();
     }
 
     @ParameterizedTest(name = "{index} => clubContents={0}")
@@ -115,6 +128,8 @@ public class SomeTest extends TestRunner {
                 .gotoAdvancedClubPage();
         //
         // TODO Use pagination to search club
+        Assertions.assertTrue(advancedClubPage.isExistClubByPartialTitle(clubContents.getTitle()));
+        presentationSleep();
     }
 
     private static Stream<Arguments> commentProvider() {
@@ -134,5 +149,8 @@ public class SomeTest extends TestRunner {
                 .openClubDetailsPage();
         //
         // TODO Check comment exist
+        Assertions.assertTrue(clubDetailsPage.getCommentsContainer()
+                .isExistClubComponentByPartialAuthor(commentContents.getAuthor()));
+        presentationSleep();
     }
 }

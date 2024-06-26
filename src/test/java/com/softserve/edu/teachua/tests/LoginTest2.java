@@ -11,7 +11,7 @@ import com.softserve.edu.opencart.pages.EditAccountPage;
 import com.softserve.edu.opencart.pages.HomePage;
 import com.softserve.edu.opencart.pages.UnsuccessfulLoginPage;
 
-public class LoginTest extends TestRunner {
+public class LoginTest2 extends TestRunnerNg {
 
     @DataProvider(parallel = true)
     public Object[][] dataSuccessful() {

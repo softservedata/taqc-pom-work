@@ -31,28 +31,49 @@ public class ClubPage extends TopSearchPart {
 
     // Functional
 
-    // Business Logic
-
-    public ClubPage chooseCity(Cities city) {
-        // TODO
-        return new ClubPage(driver);
+    public boolean isExistClubByPartialTitle(String partialTitle) {
+        boolean isFound = getClubContainer().isExistClubComponentByPartialTitle(partialTitle);
+        while (!isFound && getClubContainer().isEnableNextPageLink()) {
+            getClubContainer().clickNextPageLink();
+            initElements();
+            isFound = getClubContainer().isExistClubComponentByPartialTitle(partialTitle);
+        }
+        return isFound;
     }
 
-    public ClubPage previousClubPagination() {
+    public void clickPreviousClubPagination() {
         if (!getClubContainer().isEnablePreviousPageLink()) {
-            // throw new RuntimeException("The previous page is not available");
-            return this;
+            // TODO Develop Custom Exception
+            throw new RuntimeException("The previous page is not available");
         }
         getClubContainer().clickPreviousPageLink();
+    }
+
+    public void clickNextClubPagination() {
+        if (!getClubContainer().isEnableNextPageLink()) {
+            // TODO Develop Custom Exception
+            throw new RuntimeException("The next page is not available");
+        }
+        getClubContainer().clickNextPageLink();
+    }
+
+    // Business Logic
+
+    /*
+    public ClubPage chooseCity(Cities city) {
+        // TODO
+        // Move to TopPart
+        return new ClubPage(driver);
+    }
+    */
+
+    public ClubPage previousClubPagination() {
+        clickPreviousClubPagination();
         return new ClubPage(driver);
     }
 
     public ClubPage nextClubPagination() {
-        if (!getClubContainer().isEnableNextPageLink()) {
-            // throw new RuntimeException("The next page is not available");
-            return this;
-        }
-        getClubContainer().clickNextPageLink();
+        clickNextClubPagination();
         return new ClubPage(driver);
     }
 

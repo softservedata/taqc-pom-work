@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 public class ChallengeTeachPage extends ChallengePage {
 
     private WebElement commentLabel;
-    private WebElement webinalIframe;
+    private WebElement webinarIframe;
 
     public ChallengeTeachPage(WebDriver driver) {
         super(driver);
@@ -17,19 +17,41 @@ public class ChallengeTeachPage extends ChallengePage {
 
     private void initElements() {
         commentLabel = driver.findElement(By.xpath("//p[contains(text(), 'Вуйтік')]"));
-        webinalIframe = driver.findElement(By.xpath("//iframe[contains(@src, '/JMAF_pSOBws')]"));
+        webinarIframe = driver.findElement(By.xpath("//iframe[contains(@src, '/JMAF_pSOBws')]"));
     }
 
     // Page Object
 
     // TODO
 
+    // commentLabel
+    public WebElement getCommentLabel() {
+        return commentLabel;
+    }
+
+    public String getCommentLabelText() {
+        return getCommentLabel().getText();
+    }
+
+    // webinarIframe
+    public WebElement getWebinarIframe() {
+        return webinarIframe;
+    }
+
+    public void clickWebinarIframe() {
+        getWebinarIframe().click();
+    }
+
     // Functional
 
     // Business Logic
 
     public YoutubeFrame gotoYoutubeFrame() {
+        // clickWebinarIframe();
+        //
         // TODO Switch To iFrame
+        driver.switchTo().frame(getWebinarIframe());
         return new YoutubeFrame(driver);
     }
+
 }

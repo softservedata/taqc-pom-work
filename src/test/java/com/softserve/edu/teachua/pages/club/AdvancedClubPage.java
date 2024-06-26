@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class AdvancedClubPage extends ClubPage {
 
-    private WebElement useButton;
+    private WebElement advancedSearchLabel;
 
     public AdvancedClubPage(WebDriver driver) {
         super(driver);
@@ -15,22 +15,18 @@ public class AdvancedClubPage extends ClubPage {
     }
 
     private void initElements() {
-        useButton = driver.findElement(By.cssSelector("div.use-clear-button button.use-button"));
+        advancedSearchLabel = driver.findElement(By.cssSelector("div.ant-layout-sider-children > div.club-list-label"));
     }
 
     // Page Object
 
-    // useButton
-    public WebElement getUseButton() {
-        return useButton;
+    // advancedSearchLabel
+    public WebElement getAdvancedSearchLabel() {
+        return advancedSearchLabel;
     }
 
-    public String getUseButtonText() {
-        return getUseButton().getText();
-    }
-
-    public void clickUseButton() {
-        getUseButton().click();
+    public String getAdvancedSearchLabelText() {
+        return getAdvancedSearchLabel().getText();
     }
 
     // Functional
@@ -38,8 +34,15 @@ public class AdvancedClubPage extends ClubPage {
     // Business Logic
 
     @Override
+    public AdvancedClubPage previousClubPagination() {
+        clickPreviousClubPagination();
+        return new AdvancedClubPage(driver);
+    }
+
+    @Override
     public AdvancedClubPage nextClubPagination() {
         // TODO
+        clickNextClubPagination();
         return new AdvancedClubPage(driver);
     }
 }

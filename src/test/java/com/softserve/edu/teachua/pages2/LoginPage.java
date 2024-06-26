@@ -1,4 +1,4 @@
-package com.softserve.edu.opencart.pages;
+package com.softserve.edu.opencart.pages2;
 
 import org.openqa.selenium.WebElement;
 

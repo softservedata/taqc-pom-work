@@ -5,8 +5,14 @@ import com.softserve.edu.teachua.pages.top.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
 
 public class LoginModal {
+    public static final String POPUP_MESSAGE_UNSUCCESSFULLY = "Введено невірний пароль або email";
 
     private WebDriver driver;
     //
@@ -105,6 +111,32 @@ public class LoginModal {
         enterEmailInput(email);
         enterPasswordInput(password);
         clickSignInButton();
+    }
+
+    // popupMessageLabel
+    public String getPopupMessageLabelText() {
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                new ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        WebElement popup = driver.findElement(By.cssSelector(TopPart.POPUP_MESSAGE_CSSSELECTOR));
+                        System.out.println("\tpopup.getText() = " + popup.getText());
+                        return !popup.getText().isEmpty();
+                    }
+                }
+        );
+        //
+        List<WebElement> popupMessageLabel = driver.findElements(By.cssSelector(TopPart.POPUP_MESSAGE_CSSSELECTOR));
+        System.out.println("\tpopupMessageLabel.size() = " + popupMessageLabel.size());
+        System.out.println("\tpopupMessageLabel.get(0).getText() = " + popupMessageLabel.get(0).getText());
+        if (popupMessageLabel.size() == 0) {
+            return "";
+        }
+        return popupMessageLabel.get(0).getText();
     }
 
     // Business Logic

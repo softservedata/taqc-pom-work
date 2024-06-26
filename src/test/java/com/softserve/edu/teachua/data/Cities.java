@@ -5,18 +5,21 @@ public enum Cities {
     KYIV_CITY("Київ"),
     HARKIV_CITY("Харків");
 
+    private String city;
+
     private Cities(String city) {
         // TODO
+        this.city = city;
     }
 
     public String getCity() {
         // TODO
-        return "Харків";
+        return city;
     }
 
         @Override
     public String toString() {
         // TODO
-        return "";
+        return city;
     }
 }

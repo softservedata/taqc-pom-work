@@ -3,6 +3,11 @@ package com.softserve.edu.teachua.pages.user;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
 
 public class LoggedDropdown {
 
@@ -19,13 +24,12 @@ public class LoggedDropdown {
         initElements();
     }
 
-    // TODO
     private void initElements() {
-        addClubLink = driver.findElement(By.cssSelector("//TODO"));
-        addCenterLink = driver.findElement(By.cssSelector("//TODO"));
-        searchCertificatesLink = driver.findElement(By.cssSelector("//TODO"));
-        personalProfileLink = driver.findElement(By.cssSelector("//TODO"));
-        signOutLink = driver.findElement(By.cssSelector("//TODO"));
+        addClubLink = driver.findElement(By.cssSelector("li[data-menu-id*='club'] > span.ant-dropdown-menu-title-content"));
+        addCenterLink = driver.findElement(By.cssSelector("li[data-menu-id*='centre'] > span"));
+        searchCertificatesLink = driver.findElement(By.cssSelector("li[data-menu-id*='certificates'] > span"));
+        personalProfileLink = driver.findElement(By.cssSelector("li[data-menu-id*='profile'] > span"));
+        signOutLink = driver.findElement(By.cssSelector("li[data-menu-id*='logout'] > span"));
     }
 
     // Page Object

@@ -1,5 +1,6 @@
 package com.softserve.edu.teachua.pages.club;
 
+import com.softserve.edu.teachua.pages.top.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,10 +12,15 @@ public class ClubsContainer {
 
     public final String CLUBS_NOT_FOUND = "There is no club that matches the search criteria.";
     private final String CLUBS_COMPONENT_CSSSELECTOR = "div.ant-card.ant-card-bordered";
+    //private final String PAGINATION_NUMBERS = "li[title='%d'] > a";
+    private final String PAGINATION_NUMBERS_XPATHSELECTOR =
+            "//li[contains(@class,'ant-pagination-item')]/a[text()='%d']";
     //
     protected WebDriver driver;
     //
     private List<ClubComponent> clubComponents;
+    private WebElement previousItem;
+    private WebElement nextItem;
     private WebElement previousPageLink;
     private WebElement nextPageLink;
 
@@ -24,6 +30,11 @@ public class ClubsContainer {
     }
 
     private void initElements() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         // init elements
         clubComponents = new ArrayList<>();
         for (WebElement current : driver.findElements(By.cssSelector(CLUBS_COMPONENT_CSSSELECTOR))) {
@@ -32,6 +43,8 @@ public class ClubsContainer {
         if (clubComponents.size() == 0) {
             throw new RuntimeException(CLUBS_NOT_FOUND);
         }
+        previousItem = driver.findElement(By.cssSelector("li[title='Previous Page']"));
+        nextItem = driver.findElement(By.cssSelector("li[title='Next Page']"));
         previousPageLink = driver.findElement(By.cssSelector("li[title='Previous Page'] > button"));
         nextPageLink = driver.findElement(By.cssSelector("li[title='Next Page'] > button"));
     }
@@ -43,18 +56,48 @@ public class ClubsContainer {
         return clubComponents;
     }
 
+    // previousItem
+
+    public WebElement getPreviousItem() {
+        return previousItem;
+    }
+
+    public String getPreviousItemClassAttribute() {
+        return getPreviousItem().getAttribute(TopPart.TAG_ATTRIBUTE_CLASS);
+    }
+
+    public boolean isEnablePreviousPageLink() {
+        // TODO
+        return !getPreviousItemClassAttribute().contains("pagination-disabled");
+        //return true;
+    }
+
+    // nextItem
+    public WebElement getNextItem() {
+        return nextItem;
+    }
+
+    public String getNextItemClassAttribute() {
+        return getNextItem().getAttribute(TopPart.TAG_ATTRIBUTE_CLASS);
+    }
+
+    public boolean isEnableNextPageLink() {
+        // TODO
+        return !getNextItemClassAttribute().contains("pagination-disabled");
+        //return true;
+    }
+
     // previousPageLink
     public WebElement getPreviousPageLink() {
         return previousPageLink;
     }
 
-    public void clickPreviousPageLink() {
-        getPreviousPageLink().click();
+    public String getPreviousPageLinkText() {
+        return getPreviousPageLink().getText();
     }
 
-    public boolean isEnablePreviousPageLink() {
-        // TODO
-        return true;
+    public void clickPreviousPageLink() {
+        getPreviousPageLink().click();
     }
 
     // nextPageLink
@@ -62,13 +105,12 @@ public class ClubsContainer {
         return nextPageLink;
     }
 
-    public void clickNextPageLink() {
-        getNextPageLink().click();
+    public String getNextPageLinkText() {
+        return getNextPageLink().getText();
     }
 
-    public boolean isEnableNextPageLink() {
-        // TODO
-        return true;
+    public void clickNextPageLink() {
+        getNextPageLink().click();
     }
 
     // Functional
@@ -78,11 +120,11 @@ public class ClubsContainer {
     }
 
     public List<String> getClubComponentTitles() {
-        List<String> productComponentNames = new ArrayList<>();
+        List<String> clubComponentNames = new ArrayList<>();
         for (ClubComponent current : getClubComponents()) {
-            productComponentNames.add(current.getTitleLinkText());
+            clubComponentNames.add(current.getTitleLinkText());
         }
-        return productComponentNames;
+        return clubComponentNames;
     }
 
     public ClubComponent getFirstClubComponent() {
@@ -141,6 +183,13 @@ public class ClubsContainer {
 
     public void clickPageLinkByNumber(int numberPage) {
        // TODO
+        WebElement pageLink = null;
+        List<WebElement> paginationNumbers = driver.findElements(By
+                .xpath(String.format(PAGINATION_NUMBERS_XPATHSELECTOR, numberPage)));
+        if (paginationNumbers.size() > 0) {
+            paginationNumbers.get(0).click();
+        }
+        throw new RuntimeException("Pagination Number: " + numberPage + " not Found.");
     }
 
     // Business Logic
